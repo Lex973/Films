@@ -1,0 +1,122 @@
+.ui-loader-bg {
+    position: relative;
+    z-index: 10;
+    min-height: calc(100vh - 220px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.ui-loader-shell {
+    display: grid;
+    place-items: center;
+    gap: 16px;
+    width: min(100%, 360px);
+    padding: 32px 28px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(13, 25, 42, 0.92), rgba(8, 16, 30, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.24);
+}
+
+.ui-loader {
+    display: inline-grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 107, 44, 0.16), rgba(138, 212, 255, 0.04));
+}
+
+.loader-blk {
+    color: #3f51b5;
+    animation: rotate-outer08 1.4s linear infinite;
+}
+
+.multiColor-loader {
+    display: block;
+    animation: color-anim08 1.4s infinite;
+}
+
+.loader-circle {
+    stroke: currentColor;
+}
+
+.MuiCircularProgress-circleStatic {
+    transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.loader-circle-animation {
+    animation: rotate-inner08 1.4s ease-in-out infinite;
+    stroke-dasharray: 64px, 160px;
+    stroke-dashoffset: 0;
+}
+
+.ui-loader-text {
+    display: grid;
+    gap: 4px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.ui-loader-text span {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.ui-loader-text small {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(226, 234, 250, 0.66);
+}
+
+@keyframes rotate-outer08 {
+    0% {
+        transform-origin: 50% 50%;
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-inner08 {
+    0% {
+        stroke-dasharray: 1px, 160px;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 80px, 160px;
+        stroke-dashoffset: -12px;
+    }
+
+    100% {
+        stroke-dasharray: 80px, 160px;
+        stroke-dashoffset: -100px;
+    }
+}
+
+@keyframes color-anim08 {
+    0% {
+        color: #ff5c00;
+    }
+
+    25% {
+        color: #ea4335;
+    }
+
+    50% {
+        color: #f9822d;
+    }
+
+    75% {
+        color: #ff5c00;
+    }
+
+    100% {
+        color: #f9822d;
+    }
+}
