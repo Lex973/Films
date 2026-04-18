@@ -16,7 +16,8 @@ const LoginModal = ({open, setOpen}: LoginModalProps) => {
     const [code, setCode] = useState('');
     const [showCodeInput, setShowCodeInput] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
-    const token = useSelector(selectToken)
+    const token = useSelector(selectToken);
+    const effectiveToken = code.trim() || token;
 
     const openShowCodeInput = () => {
         setShowCodeInput(true)
@@ -29,19 +30,21 @@ const LoginModal = ({open, setOpen}: LoginModalProps) => {
     }
     const setData = async () => {
         closeModal()
-        dispatch(token_added(token))
-        CookieService.set("token", `${token}`, 7)
+        dispatch(token_added(effectiveToken))
+        CookieService.set("token", `${effectiveToken}`, 7)
         dispatch(isLogged_changed(true))
         CookieService.set("isLoggedIn", `${true}`, 7);
     }
 
     useEffect(() => {
+        if (!effectiveToken) return;
+
         const fetchId = async () => {
             const response = await fetch('https://api.themoviedb.org/3/account/account_id', {
                 method: 'GET',
                 headers: {
                     accept: 'application/json',
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${effectiveToken}`
                 }
             })
             const data = await response.json()
@@ -49,7 +52,7 @@ const LoginModal = ({open, setOpen}: LoginModalProps) => {
             CookieService.set("userId", `${data.id}`, 7)
         }
         fetchId()
-    }, [dispatch, token]);
+    }, [dispatch, effectiveToken]);
 
     return (
         <Dialog open={open} onClose={closeModal} maxWidth='sm' fullWidth slotProps={{

@@ -89,6 +89,7 @@ const SidebarFilters = ({ availableGenres }: SidebarFiltersProps) => {
                 },
             }}
         >
+
             <Box sx={{display: 'grid', gap: 0.8}}>
                 <Typography sx={{fontSize: 13, textTransform: 'uppercase', letterSpacing: 1.8, color: 'text.secondary'}}>
                     Быстрые настройки

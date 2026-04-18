@@ -12,7 +12,7 @@ import {
     selectSearchQuery,
     selectSortBy, selectYear
 } from "./store/filmsSlice.ts";
-import {selectToken} from "./store/authSlice.ts";
+import {isLogged_changed, selectToken, selectUserId, userId_changed} from "./store/authSlice.ts";
 import type {AppDispatch} from "./store/store.ts";
 import {
     fetchFilterFilms,
@@ -23,10 +23,13 @@ import {
     selectIsFilmsLoading,
     selectIsGenresLoading
 } from "./store/fetchSlice.ts";
+import {CookieService} from "./Utils/Cookie.ts";
+import {getErrorMessage, tmdbRequest} from "./Utils/tmdb.ts";
 
 
 const App = () => {
     const token = useSelector(selectToken);
+    const userId = useSelector(selectUserId);
     const searchQuery = useSelector(selectSearchQuery);
     const sortBy = useSelector(selectSortBy);
     const films = useSelector(selectFilms);
@@ -46,6 +49,30 @@ const App = () => {
         if (!token) return;
         dispatch(fetchGenres({token}));
     }, [dispatch, token]);
+
+    useEffect(() => {
+        if (!token || userId) return;
+
+        const fetchUserId = async () => {
+            try {
+                const data = await tmdbRequest<{ id: number }>(
+                    '/account/account_id',
+                    token,
+                    {method: 'GET'},
+                );
+
+                dispatch(userId_changed(data.id));
+                dispatch(isLogged_changed(true));
+                CookieService.set("token", token, 7);
+                CookieService.set("userId", `${data.id}`, 7);
+                CookieService.set("isLoggedIn", "true", 7);
+            } catch (error) {
+                console.error(getErrorMessage(error));
+            }
+        };
+
+        fetchUserId();
+    }, [dispatch, token, userId]);
 
     useEffect(() => {
         if (!token) return;
