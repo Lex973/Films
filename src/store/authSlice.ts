@@ -3,7 +3,7 @@ import {CookieService} from "../Utils/Cookie.ts";
 import type {RootState} from "./store.ts";
 
 const FALLBACK_TMDB_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZTEwZjIyZTk0ZjM4YzkwNGM5ZDExMmUwNDNmNGRmYiIsIm5iZiI6MTc3MjMzMzA1MS4xNzcsInN1YiI6IjY5YTNhN2ZiNDAwZTcxNWZiYmE3OWIwNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K1qbhAbhtwhLw6w4AgswKNLNvQAEekwPADw96rSNyMU";
-const initialToken = CookieService.get("token") ?? FALLBACK_TMDB_TOKEN;
+const initialToken = CookieService.get("token") || FALLBACK_TMDB_TOKEN;
 
 const initialUserState = {
     isLoggedIn: !!CookieService.get("isLoggedIn") || Boolean(initialToken),
