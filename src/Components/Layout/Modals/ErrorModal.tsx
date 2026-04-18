@@ -21,6 +21,9 @@ const ErrorModal = ({ text, status, setTextModal }: ErrorModalProps) => {
                 setTextModal(null)
             }}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            sx={{
+                mt: 10,
+            }}
         >
             <Alert
                 severity={status}
